@@ -1,4 +1,5 @@
 rootProject.name = 'spring-multi-module-project'
 include 'module-1'
 include 'module-2-hello-world'
+include 'module-3-kafka-producer'
 
