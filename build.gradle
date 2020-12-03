@@ -1,0 +1,53 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.3.5.RELEASE'
+}
+
+ext {
+    spring_version = '2.3.5.RELEASE'
+    junit_version = '5.6.3'
+}
+
+allprojects {
+
+    group 'com.goosemagnet'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    jar {
+        onlyIf { !sourceSets.main.allSource.files.isEmpty() }
+    }
+
+    bootJar {
+        onlyIf { !sourceSets.main.allSource.files.isEmpty() }
+    }
+}
+
+subprojects {
+
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${spring_version}")
+        }
+    }
+}
